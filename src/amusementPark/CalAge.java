@@ -13,7 +13,7 @@ public class CalAge {
 //			eg. if id_num[6] == 1, birthday gets 19------ ...
 //		String birthDay = TicketConstant.getGenerations([Integer.parseInt(TicketingCVs.ID_NUM[6]);	
 		int index = TicketConstant.ID_NUM[6]; // if 1, 2 = 19 ; 3, 4 = 20 ...
-		String bDay = TicketConstant.getGenerations(index);		// 2 digits so far
+		String bDay = ASL.yearOfBirth(index);		// 2 digits so far
 		
 		for (int i = 0; i < 6; i++) {
 			bDay += TicketConstant.ID_NUM[i];				// 8 digits 
@@ -30,34 +30,31 @@ public class CalAge {
 		Date birthDayTemp = sdf.parse(birthDay);		// birthday in date format 
 		Date today = cal.getTime();						// today
 		
-		cal.setTime(birthDayTemp);						// set the calendar
-		cal.add(Calendar.YEAR, AgeChecker.ELDERLY.getAge());
-		Date elderlyChecker = cal.getTime();			// date to be elderly.
 		
-		cal.setTime(birthDayTemp);						// reset the calendar
-		cal.add(Calendar.YEAR, AgeChecker.CHILD.getAge());
-		Date babyChecker = cal.getTime();				// date not to be baby.
-		
-		cal.setTime(birthDayTemp);						// reset the calendar
-		cal.add(Calendar.YEAR, AgeChecker.ADOLESCENT.getAge());
-		Date youthChecker = cal.getTime();				// date not to be youth.
-		
-		cal.setTime(birthDayTemp);						// reset the calendar
-		cal.add(Calendar.YEAR, AgeChecker.INFANT.getAge());
-		Date infantChecker = cal.getTime();				// date not to be infant.
+		Date infantChecker = ageChecker(birthDayTemp, AgeGroup.INFANT);				// date not to be baby.
+		Date childChecker = ageChecker(birthDayTemp, AgeGroup.CHILD);				// date not to be baby.
+		Date adolescentChecker = ageChecker(birthDayTemp, AgeGroup.ADOLESCENT);				// date not to be baby.
+		Date adultChecker = ageChecker(birthDayTemp, AgeGroup.ADULT);				// date not to be baby.
 		
 		String ageGroup = "";
-		if (today.after(elderlyChecker)) {				
-			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ELDERLY.getIndex()).name();
-		} else if (today.before(infantChecker)) {			
-			ageGroup = AgeGroup.valueOfLabel(AgeGroup.INFANT.getIndex()).name();// infant
-		} else if (today.before(babyChecker)) {									// baby
-			ageGroup = AgeGroup.valueOfLabel(AgeGroup.CHILD.getIndex()).name();
-		} else if (today.before(youthChecker)) {								// youth
-			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ADOLESCENT.getIndex()).name();
-		} else {
-			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ADULT.getIndex()).name();
+		if (today.before(infantChecker)) {			
+			ageGroup = AgeGroup.INFANT.name();// infant
+		} else if (today.before(childChecker)) {									// baby
+			ageGroup = AgeGroup.CHILD.name();
+		} else if (today.before(adolescentChecker)) {								// youth
+			ageGroup = AgeGroup.ADOLESCENT.name();
+		} else if (today.before(adultChecker)){
+			ageGroup = AgeGroup.ADULT.name();
+		} else {				
+			ageGroup = AgeGroup.ELDERLY.name();
 		}
 		return ageGroup;
+	}
+	
+	public Date ageChecker(Date baseDate, AgeGroup ageGroup) throws ParseException {
+		cal.setTime(baseDate);						// set the calendar
+		cal.add(Calendar.YEAR, ageGroup.getMaxAge());
+		Date ageChecker = cal.getTime();			// date to be elderly.
+		return ageChecker;
 	}
 }

@@ -130,14 +130,13 @@ enum ASL {      // can use it for statistics
 	public boolean isFemale() {
 		return female;
 	}
-	@SuppressWarnings("null")	// return the year born
-	public static int valueOfLabel(int seventh) {
+	public static String yearOfBirth(int seventh) {
 		for (ASL x : values()) {
 	    	if (x.seventhDigit == seventh) {
-	        	return x.getYearStart();
+	        	return x.getYearStart()+"";
 	        }
 	    }
-	    return (Integer) null;
+	    return (String) null;
 	}
 }
 
@@ -171,16 +170,13 @@ enum AgeGroup {
 	ADULT(64, 56000, 46000), ADOLESCENT(18,47000,40000), 
 	CHILD(12, 44000, 37000), ELDERLY(999, 44000, 37000), INFANT(2,0,0);
 	private int maxAge, dayPrice, nightPrice;
-	AgeGroup(int index, int dayPrice, int nightPrice){
-		this.setIndex(index);
-		this.setDaytime(dayPrice);
-		this.setNighttime(nightPrice);
+	AgeGroup(int maxAge, int dayPrice, int nightPrice){
+		this.maxAge = maxAge;
+		this.dayPrice = dayPrice;
+		this.nightPrice = nightPrice;
 	}
-	public int getIndex() {
+	public int getMaxAge() {
 		return maxAge;
-	}
-	public void setIndex(int index) {
-		this.maxAge = index;
 	}
 	public static AgeGroup valueOfLabel(int input) {
 		for (AgeGroup x : values()) {
