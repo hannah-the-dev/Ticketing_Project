@@ -4,24 +4,29 @@ import java.text.ParseException;
 
 public class Ticketing {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		boolean keep = true;
 		Menu menu = new Menu();
 		PrintsTickets print = new PrintsTickets();
 		CalAge ages = new CalAge();
 		CalAmount amount = new CalAmount();
+
 		while (keep == true) {
-			int ticketType = menu.ticketTime();
+//			ticket type > id > qty > discount > print price >continue? >>> close > print receipt > terminate? > report
+			
+			menu.ticketTime();		//DAYTIME OR NIGHTTIME
 			menu.inputID();
-			int qty = menu.ticketQty();
-			int dcGroup = menu.inputDiscount();
-			int ageGroup = ages.age();
-			int ticketAmount = amount.amount(ticketType, qty, ageGroup, dcGroup);
-			print.printsAmount(ticketAmount);
+			menu.ticketQty();
+			menu.inputDiscount();
+			ages.age();
+			int totalAmount = amount.amount();
+			print.printsAmount(totalAmount);
 			keep = menu.keeping();		//call Menu.menu(), if menu returns false, break
 		}
-		print.printsEnding();
+		print.printsEnding();	//ending gets total amount
+		print.printsSummary();
+		print.writingSales();
 	}
 
 }

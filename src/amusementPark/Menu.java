@@ -4,33 +4,41 @@ import java.util.Scanner;
 
 public class Menu {
 	Scanner sc = new Scanner(System.in);
-	public int ticketTime() {
+	Savings save = new Savings();
+	
+	
+	
+	public String ticketTime() {
 		System.out.println("Which ticket do you want to buy?");
 		System.out.println("1. Daytime ticket");
 		System.out.println("2. Nighttime ticket");
 		int ticketType = sc.nextInt();
-		return ticketType;
+		TicketType type = TicketType.valueOfLabel(ticketType);
+		String ticket = type.name();	// ticketType to String
+		// if 1: DAYTIME, 2: NIGHTTIME
+//		Savings.savingStr[WritingTitle.TICKET_TYPE.ordinal()] = ticket;
+		save.setTicketType(ticket);
+		return ticket;
 	}
 	
 	public void inputID() {
-		char[] ID_Str = null;
+		String[] ID_Str = null;
 		sc.nextLine();
 		while (true) {					// repeats until user inputs id in correct format
 			System.out.println("Please input ID number without '-'.");
-			ID_Str = sc.nextLine().toCharArray();	//
+			ID_Str = sc.nextLine().split("");	//
+			
 			if (ID_Str.length != 13) {
 				System.out.println("Wrong ID format. Please try again.");
 			} else {
-				try {		// try to put id number into CV ID_NUM
-					for (int i = 0; i < ID_Str.length; i++) {
-//						TicketingCVs.ID_NUM[i] = Integer.parseInt(ID_Str[i]);
-						TicketingCVs.ID_NUM[i] = ID_Str[i];
-						}
-					} catch (NumberFormatException e) {
-						System.out.println("Please input Arabic numerals(0-9) only.");
-					} catch (Exception e) {
-						e.printStackTrace();
-					} 
+				try { 
+					for (int i = 0; i < ID_Str.length; i++) { // try to put id number into CV ID_NUM
+					TicketConstant.ID_NUM[i] = Integer.parseInt(ID_Str[i]); }
+				} catch (NumberFormatException e) {
+					System.out.println("Please input Arabic numerals(0-9) only.");
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
 				break;
 			}
 		}
@@ -47,10 +55,14 @@ public class Menu {
 				System.out.println("Quantity is too more than 10 or less than 1");
 			}
 		}
+//		Savings.savingStr[TicketConstant.QUANTITY] = qty+"";
+//		Savings.savingStr[WritingTitle.QUANTITY.ordinal()] = qty+"";
+		save.setQuantity(qty);
+		
 		return qty;
 	}
 	
-	public int inputDiscount() {
+	public String inputDiscount() {
 		System.out.println("Please input a discount condition.");
 		System.out.println("1. None (Age discount will be automatically applied)");
 		System.out.println("2. Challenged and disabled");
@@ -58,7 +70,11 @@ public class Menu {
 		System.out.println("4. Multiple children");
 		System.out.println("5. Pregnency");
 		int dcStatus = sc.nextInt();
-		return dcStatus;
+		String dcType = Discount.valueOfLabel(dcStatus).name();
+//		Savings.savingStr[WritingTitle.QUANTITY.ordinal()] = dcType;
+		save.setDiscount(dcType);
+		
+		return dcType;
 	}
 	
 	public boolean keeping() {

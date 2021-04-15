@@ -8,43 +8,55 @@ import java.util.Date;
 public class CalAge {
 	Calendar cal = Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	public int age() throws ParseException {
+//	TicketConstant constant = new TicketConstant();
+	public String age() throws ParseException {
 //			eg. if id_num[6] == 1, birthday gets 19------ ...
-		String birthDay = TicketingCVs.GENERATIONS[Integer.parseInt(TicketingCVs.ID_NUM[6]+"")];	
+//		String birthDay = TicketConstant.getGenerations([Integer.parseInt(TicketingCVs.ID_NUM[6]);	
+		int index = TicketConstant.ID_NUM[6]; // if 1, 2 = 19 ; 3, 4 = 20 ...
+		String bDay = TicketConstant.getGenerations(index);		// 2 digits so far
 		
 		for (int i = 0; i < 6; i++) {
-			birthDay += TicketingCVs.ID_NUM[i];
+			bDay += TicketConstant.ID_NUM[i];				// 8 digits 
 		}
 		
-		int ageGroup = ageChecks(birthDay);
+		String ageGroup = ageChecks(bDay);
+//		Savings.savingStr[WritingTitle.AGE.ordinal()] = AgeGroup.valueOfLabel(ageGroup).name();
+		Savings save = new Savings();
+		save.setAge(ageGroup);
 		return ageGroup;
 	}
 	
-	public int ageChecks(String birthDay) throws ParseException {
+	public String ageChecks(String birthDay) throws ParseException {
 		Date birthDayTemp = sdf.parse(birthDay);		// birthday in date format 
 		Date today = cal.getTime();						// today
 		
 		cal.setTime(birthDayTemp);						// set the calendar
-		cal.add(Calendar.YEAR, TicketingCVs.ELDERLY_CHECK);
+		cal.add(Calendar.YEAR, AgeChecker.ELDERLY.getAge());
 		Date elderlyChecker = cal.getTime();			// date to be elderly.
 		
 		cal.setTime(birthDayTemp);						// reset the calendar
-		cal.add(Calendar.YEAR, TicketingCVs.BABY_CHECK);
+		cal.add(Calendar.YEAR, AgeChecker.CHILD.getAge());
 		Date babyChecker = cal.getTime();				// date not to be baby.
 		
 		cal.setTime(birthDayTemp);						// reset the calendar
-		cal.add(Calendar.YEAR, TicketingCVs.YOUTH_CHECK);
+		cal.add(Calendar.YEAR, AgeChecker.ADOLESCENT.getAge());
 		Date youthChecker = cal.getTime();				// date not to be youth.
 		
-		int ageGroup = 0;
+		cal.setTime(birthDayTemp);						// reset the calendar
+		cal.add(Calendar.YEAR, AgeChecker.INFANT.getAge());
+		Date infantChecker = cal.getTime();				// date not to be infant.
+		
+		String ageGroup = "";
 		if (today.after(elderlyChecker)) {				
-			ageGroup = TicketingCVs.AGE_ADULT;
-		} else if (today.before(babyChecker)) {				// baby
-			ageGroup = TicketingCVs.AGE_BABY;
-		} else if (today.before(youthChecker)) {			// youth
-			ageGroup = TicketingCVs.AGE_YOUTH;
+			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ELDERLY.getIndex()).name();
+		} else if (today.before(infantChecker)) {			
+			ageGroup = AgeGroup.valueOfLabel(AgeGroup.INFANT.getIndex()).name();// infant
+		} else if (today.before(babyChecker)) {									// baby
+			ageGroup = AgeGroup.valueOfLabel(AgeGroup.CHILD.getIndex()).name();
+		} else if (today.before(youthChecker)) {								// youth
+			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ADOLESCENT.getIndex()).name();
 		} else {
-			ageGroup = TicketingCVs.AGE_ADULT;
+			ageGroup = AgeGroup.valueOfLabel(AgeGroup.ADULT.getIndex()).name();
 		}
 		return ageGroup;
 	}
