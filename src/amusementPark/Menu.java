@@ -4,21 +4,15 @@ import java.util.Scanner;
 
 public class Menu {
 	Scanner sc = new Scanner(System.in);
-	Savings save = new Savings();
-	
-	
-	
-	public String ticketTime() {
+	public TicketType ticketTime() {
 		System.out.println("Which ticket do you want to buy?");
 		System.out.println("1. Daytime ticket");
 		System.out.println("2. Nighttime ticket");
 		int ticketType = sc.nextInt();
+		System.out.println(ticketType);
 		TicketType type = TicketType.valueOfLabel(ticketType);
-		String ticket = type.name();	// ticketType to String
 		// if 1: DAYTIME, 2: NIGHTTIME
-//		Savings.savingStr[WritingTitle.TICKET_TYPE.ordinal()] = ticket;
-		save.setTicketType(ticket);
-		return ticket;
+		return type;
 	}
 	
 	public void inputID() {
@@ -29,11 +23,17 @@ public class Menu {
 			ID_Str = sc.nextLine().split("");	//
 			
 			if (ID_Str.length != 13) {
-				System.out.println("Wrong ID format. Please try again.");
+				System.out.println("Wrong ID format: too short or too long.");
+			} else if (Integer.parseInt(ID_Str[2]+ID_Str[3]) < 1 || Integer.parseInt(ID_Str[2]+ID_Str[3]) > 12) {
+//				 		if month digits are 00 or over 13
+				System.out.println("Wrong ID format: month is not in bewteen Jan and Dec.");
+			} else if (Integer.parseInt(ID_Str[4]+ID_Str[5]) < 1 || Integer.parseInt(ID_Str[4]+ID_Str[5]) > 31) {
+//				 		if day digits are 00 or over 31
+				System.out.println("Wrong ID format: day is not in a month");
 			} else {
 				try { 
 					for (int i = 0; i < ID_Str.length; i++) { // try to put id number into CV ID_NUM
-					TicketConstant.ID_NUM[i] = Integer.parseInt(ID_Str[i]); }
+					SaveData.ID_NUM[i] = Integer.parseInt(ID_Str[i]); }
 				} catch (NumberFormatException e) {
 					System.out.println("Please input Arabic numerals(0-9) only.");
 				} catch (Exception e) {
@@ -49,20 +49,16 @@ public class Menu {
 		while (true) {
 			System.out.println("How many tickets do you want to buy? (Max: 10)");
 			qty = sc.nextInt();
-			if ((qty >= TicketingCVs.MIN_QTY) && (qty <= TicketingCVs.MAX_QTY)) {
+			if ((qty >= QtyMinMax.MIN.getQty()) && (qty <= QtyMinMax.MAX.getQty())) {
 				break;
 			} else {
 				System.out.println("Quantity is too more than 10 or less than 1");
 			}
 		}
-//		Savings.savingStr[TicketConstant.QUANTITY] = qty+"";
-//		Savings.savingStr[WritingTitle.QUANTITY.ordinal()] = qty+"";
-		save.setQuantity(qty);
-		
 		return qty;
 	}
 	
-	public String inputDiscount() {
+	public Discount inputDiscount() {
 		System.out.println("Please input a discount condition.");
 		System.out.println("1. None (Age discount will be automatically applied)");
 		System.out.println("2. Challenged and disabled");
@@ -70,10 +66,7 @@ public class Menu {
 		System.out.println("4. Multiple children");
 		System.out.println("5. Pregnency");
 		int dcStatus = sc.nextInt();
-		String dcType = Discount.valueOfLabel(dcStatus).name();
-//		Savings.savingStr[WritingTitle.QUANTITY.ordinal()] = dcType;
-		save.setDiscount(dcType);
-		
+		Discount dcType = Discount.valueOfLabel(dcStatus);
 		return dcType;
 	}
 	
@@ -96,5 +89,12 @@ public class Menu {
 			}
 		}		
 		return keep;
+	}
+	
+	public boolean askSession() {
+		System.out.println("Do you want to continue? (1: New session, 2: Close program) -> ");
+		boolean newSession = Session.boolOfLabel(sc.nextInt());
+		System.out.println();
+		return newSession;
 	}
 }

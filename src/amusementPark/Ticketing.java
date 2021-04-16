@@ -1,32 +1,51 @@
 package amusementPark;
 
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Ticketing {
-
+	public static ArrayList<Object> savingEach;
+	public static ArrayList<ArrayList<Object>> savingList;
+	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
+		savingList = new ArrayList<ArrayList<Object>>();
 		boolean keep = true;
+		boolean newSession = true;
 		Menu menu = new Menu();
-		PrintsTickets print = new PrintsTickets();
+		PrintsTickets print = new PrintsTickets(savingList);
 		CalAge ages = new CalAge();
 		CalAmount amount = new CalAmount();
-
-		while (keep == true) {
-//			ticket type > id > qty > discount > print price >continue? >>> close > print receipt > terminate? > report
+		SaveData save = new SaveData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		while (newSession == true) {
+			while (keep == true) {
+	//			ticket type > id > qty > discount > print price >continue? >>> close > print receipt > terminate? > report
+				
+				save.setTicketType(menu.ticketTime());		//DAYTIME OR NIGHTTIME
+				menu.inputID();
+				save.setAge(ages.age());
+				save.setQuantity(menu.ticketQty());
+				save.setDiscount(menu.inputDiscount());
+				
+				long totalAmount = amount.amount(save.getAge(), save.getTicketType(), save.getQuantity(), save.getDiscount());
+				save.setAmount(totalAmount);
+				print.printsAmount(totalAmount);
+	
+				
+				save.setDate(sdf.format(Calendar.getInstance().getTime()));
+				savingEach = save.getAny();
+				savingList.add(savingEach);
+				keep = menu.keeping();		//call Menu.menu(), if menu returns false, break
+			}
 			
-			menu.ticketTime();		//DAYTIME OR NIGHTTIME
-			menu.inputID();
-			menu.ticketQty();
-			menu.inputDiscount();
-			ages.age();
-			int totalAmount = amount.amount();
-			print.printsAmount(totalAmount);
-			keep = menu.keeping();		//call Menu.menu(), if menu returns false, break
+			// saving list with getter
+			print.printsEnding();	//ending gets total amount
+			WritesTickets write = new WritesTickets(savingList);
+			write.writingSales();
+			keep = true;
+			newSession = menu.askSession();
 		}
-		print.printsEnding();	//ending gets total amount
-		print.printsSummary();
-		print.writingSales();
 	}
-
 }

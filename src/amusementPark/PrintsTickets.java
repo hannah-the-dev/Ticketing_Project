@@ -2,14 +2,17 @@ package amusementPark;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PrintsTickets {
-	ArrayList<Savings> savingList = new ArrayList<Savings>();
-	Savings save = new Savings();
+	ArrayList<ArrayList<Object>> savingList;
+	DecimalFormat df = new DecimalFormat("###,###"); 
+	public PrintsTickets(ArrayList<ArrayList<Object>> savingList) {
+		this.savingList = savingList;
+	}
 
-	public void printsAmount(int amount) {
-		DecimalFormat df = new DecimalFormat("###,###"); 
-		System.out.println("Total price is " + df.format(amount));
+	public void printsAmount(long totalAmount) {
+		System.out.println("Total price is " + df.format(totalAmount));
 		System.out.println("Thank you.");
 		System.out.println();
 	}
@@ -19,54 +22,25 @@ public class PrintsTickets {
 		System.out.println();
 		
 //		call method printing receipts
-		printsSummary();
+		printsSummary(savingList); 
 	}
 	
-	public void printsSummary() {
-		System.out.printf("================ KOPOWORLD ================\n");
-		for (int i = 0; i < savingList.size(); i++) {
-			System.out.printf(savingList.get(i).toString());
+	public void printsSummary(ArrayList<ArrayList<Object>> savingList) {
+		System.out.printf("============================= KOPOWORLD ============================\n");
+		int sum = 0;
+		int qty = 0;
+		for (ArrayList<Object> x : savingList) {
+			System.out.printf("%-6s%-6s\tX %2d\t%7d 원\t%-15s\n", 
+					TicketType.KorOfVal(x.get(WritingTitle.TICKET_TYPE.getOrder())+""),
+					AgeGroup.KorOfVal(x.get(WritingTitle.AGE.getOrder())+""),
+					x.get(WritingTitle.QUANTITY.getOrder()),
+					x.get(WritingTitle.AMOUNT.getOrder()),
+					Discount.KorOfVal(x.get(WritingTitle.DISCOUNT.getOrder())+"")
+					);
+			qty += Integer.parseInt(x.get(WritingTitle.QUANTITY.getOrder())+"");
+			sum += Integer.parseInt(x.get(WritingTitle.AMOUNT.getOrder())+"");
 		}
-		
-		
-	}
-	public void writingSales() throws Exception	{
-//		writing title -> change to csv writer instead of print
-		for(WritingTitle x: WritingTitle.values()) {
-			if (x.ordinal() == WritingTitle.values().length) {
-				System.out.print(x.name());
-				
-			} else System.out.print(x.name()+",");
-		}
-//		writing contents
-		Savings save;
-		for(WritingTitle x: WritingTitle.values()) {
-			System.out.println();
-			String value = toGet(x.name().toLowerCase());
-			System.out.println(value);
-		}
-	}
-
-	public String toGet(String name) {
-		String answer = "";
-		if (name.equals("date")) {
-			answer = save.getDate();
-		} else if (name.equals("ticket_type")) {
-			answer = save.getTicketType();
-		} else if (name.equals("discount")) {
-			answer = save.getDiscount();
-		} else if (name.equals("age")) {
-			answer = save.getAge()+"";
-		} else if (name.equals("quantity")) {
-			answer = save.getQuantity()+"";
-		} else if (name.equals("amount")) {
-			answer = save.getAmount()+"";
-		}
-		return answer;
-	}
-	// every purchase time, do this
-	public void toList() {
-		Savings save = new Savings();
-		savingList.add(save);
+		System.out.printf("입장료 총액은 %s원 입니다(총 %d 매).\n", df.format(sum), qty);
+		System.out.printf("============================= KOPOWORLD ============================\n");
 	}
 }

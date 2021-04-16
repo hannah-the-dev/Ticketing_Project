@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>commons-lang3-3.12.0-src</name>
+			<type>2</type>
+			<location>C:/Users/kopo21/Downloads/OpenCSV/commons-lang3-3.12.0-src</location>
+		</link>
+	</linkedResources>
 </projectDescription>

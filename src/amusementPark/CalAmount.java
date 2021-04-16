@@ -1,23 +1,16 @@
 package amusementPark;
 
-import java.util.List;
-
 public class CalAmount {
-	Savings save = new Savings();
-	public int amount() {
+//	SaveData save = new SaveData();
+	public long amount(AgeGroup age, TicketType type, int qty, Discount discount) {
 //		ticket type 1 == day, 2 == night
-		int ticketAmount = Ticket.valueOf(save.getTicketType()).getOnePrice(
-				AgeGroup.valueOf(save.getAge()).getIndex()); 
-		int qty = save.getQuantity();
-		double rest = 1-Discount.valueOf(save.getDiscount()).getRate();
+//		saved age = adult, adolescent, ....
+//		
+		int ticketAmount = AgeGroup.getAgeGroup(age)	//ageGroup
+				.getAnytime(type); 				//ticekt type
+		double rest = 1-Discount.getDiscount(discount).getRate(); // after discount
+		long totalAmount = (long) Math.ceil(ticketAmount * qty * rest /10)*10;
 		
-		
-		int totalAmount = (int) Math.ceil(ticketAmount * qty * rest /10)*10;
-		Savings save = new Savings();
-		save.setAmount(totalAmount);
-		PrintsTickets print = new PrintsTickets();
-		print.toList();
 		return totalAmount;
 	}
-	
 }

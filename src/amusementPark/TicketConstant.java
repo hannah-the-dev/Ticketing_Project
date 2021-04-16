@@ -1,70 +1,90 @@
 package amusementPark;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class TicketConstant {
-//	private final static String[] GENERATIONS = {"18","19","19","20","20","19","19","18"};
-//										ID_NUM[6]: 	0	1	2	3	4	5	6	7	8	9	
-//	public static String[] salesData = {"Date", "Ticket Type", "Age", "Quantity", "Amount", "Discount"};
-	
+	private String filePath = "C:\\Users\\kopo21\\Desktop\\TicketSales.csv";
 
-	static int[] ID_NUM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};		// calculates ages 
-	
-	public static int[] getID_NUM() {
-		return ID_NUM;
+	public String getFilePath() {
+		return filePath;
 	}
-	public static void setID_NUM(int[] iD_Str) {
-		ID_NUM = iD_Str;
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
-//	public static String getGenerations(int index) {
-//		return GENERATIONS[index];
-//	}
-//	public static String[] getGenerations() {
-//		return GENERATIONS;
-//	}
 }
+
 
 enum WritingTitle {
-	DATE(0), TICKET_TYPE(1), AGE(2), QUANTITY(3), AMOUNT(4), DISCOUNT(5);
+	DATE(0, "일자"), TICKET_TYPE(1, "권종"), AGE(2, "연령"), QUANTITY(3, "수량"), AMOUNT(4, "매출"), DISCOUNT(5, "우대사항");
+	
 	private int order;
-	WritingTitle(int order) {
+	private String receipt;
+	WritingTitle(int order, String receipt) {
 		this.order = order;
+		this.receipt = receipt;
 		// TODO Auto-generated constructor stub
+	}
+	public int getOrder() {
+		return order;
+	}
+	public String getReceipt() {
+		return receipt;
+	}
+	public static String KorOfVal(String input) {
+		for (WritingTitle x : values()) {
+			if (x == WritingTitle.valueOf(input)) {
+				return x.getReceipt();
+			}
+		}
+		return null;
 	}
 }
 
-
 enum TicketType {
-	DAYTIME(1), NIGHTTIME(2);
+	DAYTIME(1, "주간권"), NIGHTTIME(2, "야간권");
 	private int menu;
-	TicketType(int menu) {
+	private String receipt;
+	TicketType(int menu, String receipt) {
 		this.menu = menu;
+		this.receipt = receipt;
 	}
 	public int getMenu() {
 		return menu;
 	}
 	public static TicketType valueOfLabel(int label) {	//determine which time
+		TicketType returnValue = null;
 		for (TicketType t : values()) {
 	    	if (t.menu == label) {
-	        	return t;
-	        }
+	    		returnValue = t;
+	        } 
 	    }
-	    return null;
+		return returnValue;
+	}
+	public String getReceipt() {
+		return receipt;
+	}
+	public static String KorOfVal(String input) {
+		for (TicketType x : values()) {
+			if (x == TicketType.valueOf(input)) {
+				return x.getReceipt();
+			}
+		}
+		return null;
 	}
 }
 
 enum Discount {
-	NONE(1, 0.00f), CHALLENGED(2, 0.40f), 
-	NAT_MERIT(3, 0.50f), MULTI_CHILD(4, 0.20f), PREGNENCY(5, 0.15f);
+	NONE(1, 0.00f, "*우대 적용 없음"), CHALLENGED(2, 0.40f, "*장애인 우대 적용"), 
+	NAT_MERIT(3, 0.50f, "*국가 유공자 우대 적용"), MULTI_CHILD(4, 0.20f, "*다자녀 우대 적용"), 
+	PREGNENCY(5, 0.15f, "*임산부 우대 적용");
 	private int menu;
 	private float rate;
+	private String receipt;
 //	private boolean apply;
 	
-	Discount(int menu, float rate) {
+	Discount(int menu, float rate, String receipt) {
 		this.menu = menu;
 		this.rate = rate;
-//		this.apply = apply;
+		this.receipt = receipt;
 	}
 	public int getMenu() {
 		return menu;
@@ -75,20 +95,30 @@ enum Discount {
 	public void setRate(float rate) {
 		this.rate = rate;		//in case special discount 
 	}
-//	public boolean isApply() {
-//		return apply;
-//	}
-//	public void setApply(boolean apply) {
-//		this.apply = apply;
-//	}
+	public String getReceipt() {
+		return receipt;
+	}
 	// determine which dc option
 	public static Discount valueOfLabel(int label) {
+		Discount returnValue = null;
 		for (Discount d : values()) {
 	    	if (d.menu == label) {
-	        	return d;
+	    		returnValue = d;
 	        }
 	    }
-	    return null;
+	    return returnValue;
+	}
+	public static Discount getDiscount(Discount age) {
+		// TODO Auto-generated method stub
+		return age;
+	}
+	public static String KorOfVal(String input) {
+		for (Discount x : values()) {
+			if (x == Discount.valueOf(input)) {
+				return x.getReceipt();
+			}
+		}
+		return null;
 	}
 }
 
@@ -140,43 +170,24 @@ enum ASL {      // can use it for statistics
 	}
 }
 
-//enum AgeChecker {
-//	INFANT(2),		// 0-2
-//	CHILD(12),		// 3-12 if younger (inclusive)
-//	ADOLESCENT(18),	// 13-18 if younger (inclusive)
-//	ELDERLY(65);	// 65- if older	  (inclusive)
-//	private int age;
-//	AgeChecker(int age) {
-//		this.setAge(age);
-//	}
-//	public int getAge() {
-//		return age;
-//	}
-//	public void setAge(int age) {
-//		this.age = age;
-//	}
-	
-//	public static AgeChecker valueOfLabel(int label) {
-//		for (AgeChecker a : values()) {
-//	    	if (a.age == label) {
-//	        	return a;
-//	        }
-//	    }
-//	    return null;
-//	}
-//}
 enum AgeGroup {
 //	ADULT, ADOLESCENT, CHILD, ELDERLY, INFANT;
-	ADULT(64, 56000, 46000), ADOLESCENT(18,47000,40000), 
-	CHILD(12, 44000, 37000), ELDERLY(999, 44000, 37000), INFANT(2,0,0);
+	ADULT(64, 56000, 46000,"성인"), ADOLESCENT(18,47000,40000,"청소년"), 
+	CHILD(12, 44000, 37000, "어린이"), ELDERLY(999, 44000, 37000,"노인"), 
+	INFANT(2,0,0,"유아");
 	private int maxAge, dayPrice, nightPrice;
-	AgeGroup(int maxAge, int dayPrice, int nightPrice){
+	private String receipt;
+	AgeGroup(int maxAge, int dayPrice, int nightPrice, String receipt){
 		this.maxAge = maxAge;
 		this.dayPrice = dayPrice;
 		this.nightPrice = nightPrice;
+		this.receipt = receipt;
 	}
 	public int getMaxAge() {
 		return maxAge;
+	}
+	public String getReceipt() {
+		return receipt;
 	}
 	public static AgeGroup valueOfLabel(int input) {
 		for (AgeGroup x : values()) {
@@ -186,6 +197,23 @@ enum AgeGroup {
 	    }
 	    return null;
 	}
+	public static String KorOfVal(String input) {
+		for (AgeGroup x : values()) {
+			if (x == AgeGroup.valueOf(input)) {
+				return x.getReceipt();
+			}
+		}
+		return null;
+	}
+	@SuppressWarnings("null")
+	public int getAnytime(TicketType ticketType) {
+		if (ticketType == TicketType.DAYTIME) {
+			return dayPrice;
+		} else if (ticketType == TicketType.NIGHTTIME) {
+			return nightPrice;
+		} else return (Integer) null;
+	}
+	
 	public int getDaytime() {
 		return dayPrice;
 	}
@@ -198,24 +226,37 @@ enum AgeGroup {
 	public void setNighttime(int nightPrice) {
 		this.nightPrice = nightPrice;
 	}
+	public static AgeGroup getAgeGroup(AgeGroup age) {
+		// TODO Auto-generated method stub
+		return age;
+	}
 }
 
-//enum Ticket {
-//	DAYTIME ("Daytime", Arrays.asList(56000,47000,44000,44000,0)),
-//	NIGHTTIME ("Nighttime", Arrays.asList(46000,40000,37000,37000,0));
-//	private String name;
-//	private List<Integer> price;
-//	Ticket(String string, List<Integer> price){
-//		this.setPrice(price);
-//	}
-//	public List<Integer> getPrice() {
-//		return price;
-//	}
-//	public int getOnePrice(int index) {
-//		return price.get(index);
-//	}
-//	public void setPrice(List<Integer> price) {
-//		this.price = price;
-//	}
-//
-//}
+enum Session {
+	NEW(1, true), CLOSE(2, false);
+	private int menu;
+	private boolean bool;
+	Session(int menu, boolean bool) {
+		this.menu = menu;
+		this.bool = bool;
+	}
+	public int getMenu() {
+		return menu;
+	}
+	public boolean isBool() {
+		return bool;
+	}
+	public static boolean boolOfLabel(int input) {
+		boolean bool = true;
+		for (Session x : values()) {
+	    	if (x.getMenu() == input) {
+	        	bool = x.isBool();
+	        	break;
+	        } else {  
+	    		bool = false;
+	    		break;
+	        }
+	    }
+		return bool;
+	}
+}
