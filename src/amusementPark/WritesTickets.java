@@ -3,6 +3,7 @@ package amusementPark;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.opencsv.CSVWriter;
@@ -11,11 +12,15 @@ public class WritesTickets {
 	ArrayList<ArrayList<Object>> savingList;
 	TicketConstant constant = new TicketConstant();
 	public BufferedWriter bw = null;
-	File file = new File(constant.getFilePath());
+//	File file = new File(constant.getFilePath());
+	String dynamicPath = constant.getDirName()+File.separator+constant.getFileName();
+	File file = new File(dynamicPath);
+	
 	public WritesTickets(ArrayList<ArrayList<Object>> savingList) {
 		this.savingList = savingList;
 	}
-	public void writingSales() throws Exception	{
+	public void writingSales() throws IOException	{
+		System.out.println(dynamicPath);
 //		writing title -> change to csv writer instead of print
 		CSVWriter writer = new CSVWriter(new FileWriter(file, true));			
 		//writing title

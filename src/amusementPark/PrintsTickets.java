@@ -40,7 +40,8 @@ public class PrintsTickets {
 			qty += Integer.parseInt(x.get(WritingTitle.QUANTITY.getOrder())+"");
 			sum += Integer.parseInt(x.get(WritingTitle.AMOUNT.getOrder())+"");
 		}
+		System.out.println();
 		System.out.printf("입장료 총액은 %s원 입니다(총 %d 매).\n", df.format(sum), qty);
-		System.out.printf("============================= KOPOWORLD ============================\n");
+		System.out.printf("====================================================================\n");
 	}
 }

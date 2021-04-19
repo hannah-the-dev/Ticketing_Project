@@ -67,9 +67,14 @@ public class Menu {
 		System.out.println("2. Challenged and disabled");
 		System.out.println("3. National merits");
 		System.out.println("4. Multiple children");
-		System.out.println("5. Pregnency");
+		System.out.println("5. Pregnancy");
 		int dcStatus = sc.nextInt();
 		Discount dcType = Discount.valueOfLabel(dcStatus);
+		// if pregnancy chosen, but not female, 
+		if (dcStatus == Discount.PREGNANCY.getMenu() && !ASL.valueOfLabel(dcStatus).isFemale()) {
+			dcType = Discount.NONE;
+			System.out.println("Currently, only female can get pregnancy discount");
+		}
 		return dcType;
 	}
 	
@@ -95,6 +100,7 @@ public class Menu {
 	}
 	
 	public boolean askSession() {
+		System.out.println();
 		System.out.println("Do you want to continue? (1: New session, 2: Close program) -> ");
 		boolean newSession = Session.boolOfLabel(sc.nextInt());
 		System.out.println();

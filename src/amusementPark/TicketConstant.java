@@ -1,14 +1,32 @@
 package amusementPark;
 
 public class TicketConstant {
-	private String filePath = "C:\\Users\\kopo21\\Desktop\\TicketSales.csv";
+//	private String filePath = "C:\\Users\\kopo21\\Desktop\\TicketSales.csv";
+	private String fileName = "TicketSales.csv";
+	private String dirName = System.getProperty("user.home");
 
-	public String getFilePath() {
-		return filePath;
+//	public String getFilePath() {
+//		return filePath;
+//	}
+//
+//	public void setFilePath(String filePath) {
+//		this.filePath = filePath;
+//	}
+
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getDirName() {
+		return dirName;
+	}
+
+	public void setDirName(String dirName) {
+		this.dirName = dirName;
 	}
 }
 
@@ -75,7 +93,7 @@ enum TicketType {
 enum Discount {
 	NONE(1, 0.00f, "*우대 적용 없음"), CHALLENGED(2, 0.40f, "*장애인 우대 적용"), 
 	NAT_MERIT(3, 0.50f, "*국가 유공자 우대 적용"), MULTI_CHILD(4, 0.20f, "*다자녀 우대 적용"), 
-	PREGNENCY(5, 0.15f, "*임산부 우대 적용");
+	PREGNANCY(5, 0.15f, "*임산부 우대 적용");
 	private int menu;
 	private float rate;
 	private String receipt;
@@ -168,6 +186,14 @@ enum ASL {      // can use it for statistics
 	    }
 	    return (String) null;
 	}
+	public static ASL valueOfLabel(int input) {
+		for (ASL x : values()) {
+	    	if (x.seventhDigit == input) {
+	        	return x;
+	        }
+	    }
+	    return null;
+	}
 }
 
 enum AgeGroup {
@@ -250,10 +276,16 @@ enum Session {
 		boolean bool = true;
 		for (Session x : values()) {
 	    	if (x.getMenu() == input) {
-	        	bool = x.isBool();
+	    		bool = x.isBool();
+	        	if (bool == true) {
+	        		System.out.println("Starting new session......");
+//	        	} else if (x.isBool() == false) {
+//	        		System.out.println("Closing program......");
+	        	}
 	        	break;
 	        } else {  
 	    		bool = false;
+	    		System.out.println("Closing program......");
 	    		break;
 	        }
 	    }
