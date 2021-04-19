@@ -8,7 +8,6 @@ import java.util.Date;
 public class CalAge {
 	Calendar cal = Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//	TicketConstant constant = new TicketConstant();
 	public String bDay() throws ParseException {
 //			eg. if id_num[6] == 1, birthday gets 19------ ...
 		int index = SaveData.ID_NUM[6]; // if 1, 2 = 19 ; 3, 4 = 20 ...
@@ -19,24 +18,10 @@ public class CalAge {
 		}
 		return bDay;
 	}
-		
-//	public AgeGroup age(Date birthDay, Date today) throws ParseException {
-//		
-////		Date birthDay = ;
-////		Date today = cal.getTime();						// today
-////		
-//		
-//		AgeGroup ageGroup = ageChecks(birthDay, today);
-//		
-//		return ageGroup;
-//	}
 	
 	public AgeGroup ageChecks(Date birthDay, Date today) {
-//		Date birthDayTemp;
 		AgeGroup ageGroup = null;
 		try {
-//			birthDayTemp = sdf.parse(birthDay);
-//			Date today = cal.getTime();						// today
 		
 			Date infantChecker = ageChecker(birthDay, AgeGroup.INFANT);				// date not to be an infant
 			Date childChecker = ageChecker(birthDay, AgeGroup.CHILD);				// date not to be a child
@@ -56,7 +41,6 @@ public class CalAge {
 			}
 		} catch (ParseException e) {
 			System.out.println("Wrong ID format: impossible date of birth");
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}				// date not to be baby.
 		return ageGroup;

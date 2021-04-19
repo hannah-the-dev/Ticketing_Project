@@ -13,7 +13,7 @@ public class WritesTickets {
 	TicketConstant constant = new TicketConstant();
 	public BufferedWriter bw = null;
 //	File file = new File(constant.getFilePath());
-	String dynamicPath = constant.getDirName()+File.separator+constant.getFileName();
+	String dynamicPath = constant.getDirName()+"\\Desktop"+File.separator+constant.getFileName();
 	File file = new File(dynamicPath);
 	
 	public WritesTickets(ArrayList<ArrayList<Object>> savingList) {

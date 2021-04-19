@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/kopo21/Downloads/OpenCSV/opencsv-5.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kopo21/Downloads/OpenCSV/commons-lang3-3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

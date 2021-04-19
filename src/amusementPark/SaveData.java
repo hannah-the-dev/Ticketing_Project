@@ -67,6 +67,7 @@ public class SaveData {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	
 	public ArrayList<Object> getAny() {
 		ArrayList<Object> savingEach = new ArrayList<Object>();
 		savingEach.add(getDate());
