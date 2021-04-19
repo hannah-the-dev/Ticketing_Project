@@ -20,10 +20,12 @@ public class WritesTickets {
 		CSVWriter writer = new CSVWriter(new FileWriter(file, true));			
 		//writing title
 		String[] titleTemp = new String[WritingTitle.values().length];
-		for (WritingTitle x : WritingTitle.values()) {
-			titleTemp[x.ordinal()] = x.name();
+		if (file.length() < 10) {
+			for (WritingTitle x : WritingTitle.values()) {
+				titleTemp[x.ordinal()] = x.name();
+			}
+			writer.writeNext(titleTemp);
 		}
-		writer.writeNext(titleTemp);
 		
 //		writing contents
 		for(ArrayList<Object> x: savingList) {					

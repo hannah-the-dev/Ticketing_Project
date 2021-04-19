@@ -24,8 +24,13 @@ public class Ticketing {
 	//			ticket type > id > qty > discount > print price >continue? >>> close > print receipt > terminate? > report
 				
 				save.setTicketType(menu.ticketTime());		//DAYTIME OR NIGHTTIME
-				menu.inputID();
-				save.setAge(ages.age());
+				
+				do {											// if the date is after today,
+					menu.inputID();								// returns 8 digits of birthday
+					save.setBirthDay(ages.bDay());				//
+				} while(ages.todayChecker(save.getBirthDay()) == false) ;
+				save.setAge(ages.ageChecks(save.getBirthDay(), SaveData.getToday()));
+				
 				save.setQuantity(menu.ticketQty());
 				save.setDiscount(menu.inputDiscount());
 				

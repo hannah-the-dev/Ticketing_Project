@@ -1,5 +1,6 @@
 package amusementPark;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -17,7 +18,7 @@ public class Menu {
 	
 	public void inputID() {
 		String[] ID_Str = null;
-		sc.nextLine();
+		Scanner sc = new Scanner(System.in);
 		while (true) {					// repeats until user inputs id in correct format
 			System.out.println("Please input ID number without '-'.");
 			ID_Str = sc.nextLine().split("");	//
@@ -35,6 +36,8 @@ public class Menu {
 					for (int i = 0; i < ID_Str.length; i++) { // try to put id number into CV ID_NUM
 					SaveData.ID_NUM[i] = Integer.parseInt(ID_Str[i]); }
 				} catch (NumberFormatException e) {
+					System.out.println("Please input Arabic numerals(0-9) only.");
+				} catch (InputMismatchException e) {
 					System.out.println("Please input Arabic numerals(0-9) only.");
 				} catch (Exception e) {
 					e.printStackTrace();
