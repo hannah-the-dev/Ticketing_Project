@@ -8,14 +8,14 @@ import java.util.Date;
 
 public class SaveData {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	
+	// save type: numbers, return string 
 	private String date; 
 	private TicketType ticket_Type;
-	private Discount discount;
 	private AgeGroup age;
 	private int quantity;
 	private long amount;
 	private Date birthDay;
+	private Discount discount;
 	private static Date today = Calendar.getInstance().getTime();
 	
 	public static int[] ID_NUM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};		// calculates ages 
@@ -79,6 +79,18 @@ public class SaveData {
 		return savingEach;
 	}
 
+	public String[] getAnyList() {
+		String[] anyList = new String[] {
+			getDate(),
+			getTicketType().name(),
+			getAge().name(),
+			getQuantity()+"",
+			getAmount()+"",
+			getDiscount().name()
+		};
+		return anyList;
+	}
+
 	public Date getBirthDay() {
 		return birthDay;
 	}
@@ -96,5 +108,3 @@ public class SaveData {
 		return today;
 	}
 }
-	
-	

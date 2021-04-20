@@ -8,7 +8,7 @@ public class CalAmount {
 //		
 		int ticketAmount = AgeGroup.getAgeGroup(age)	//ageGroup
 				.getAnytime(type); 				//ticekt type
-		double rest = 1-Discount.getDiscount(discount).getRate(); // after discount
+		double rest = 1-Discount.getDiscount(discount).rate; // after discount
 		long totalAmount = (long) Math.ceil(ticketAmount * qty * rest /10)*10;
 		
 		return totalAmount;

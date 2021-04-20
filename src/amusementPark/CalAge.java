@@ -49,7 +49,7 @@ public class CalAge {
 	
 	public Date ageChecker(Date baseDate, AgeGroup ageGroup) throws ParseException {
 		cal.setTime(baseDate);						// set the calendar
-		cal.add(Calendar.YEAR, ageGroup.getMaxAge());
+		cal.add(Calendar.YEAR, ageGroup.maxAge);
 		Date ageChecker = cal.getTime();			// date to be elderly.
 		return ageChecker;
 	}

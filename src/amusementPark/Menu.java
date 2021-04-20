@@ -12,24 +12,25 @@ public class Menu {
 		int ticketType = sc.nextInt();
 		System.out.println(ticketType);
 		TicketType type = TicketType.valueOfLabel(ticketType);
-		// if 1: DAYTIME, 2: NIGHTTIME
 		return type;
 	}
 	
 	public void inputID() {
 		String[] ID_Str = null;
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);			// if omit: cannot take the number at the first time
 		while (true) {					// repeats until user inputs id in correct format
-			System.out.println("Please input ID number without '-'.");
-			ID_Str = sc.nextLine().split("");	//
+			System.out.println("Please input ID number without space");
+			ID_Str = sc.nextLine().replace("-", "").split("");	// in case user inputs hyphen, remove it
 			
-			if (ID_Str.length != 13) {
-				System.out.println("Wrong ID format: too short or too long.");
-			} else if (Integer.parseInt(ID_Str[2]+ID_Str[3]) < 1 || Integer.parseInt(ID_Str[2]+ID_Str[3]) > 12) {
-//				 		if month digits are 00 or over 13
-				System.out.println("Wrong ID format: month is not in bewteen Jan and Dec.");
-			} else if (Integer.parseInt(ID_Str[4]+ID_Str[5]) < 1 || Integer.parseInt(ID_Str[4]+ID_Str[5]) > 31) {
-//				 		if day digits are 00 or over 31
+			if (ID_Str.length != 13) {				// if length is not correct
+				System.out.println("Wrong ID format: too short or too long.");	
+			} else if (Integer.parseInt(ID_Str[2]+ID_Str[3]) < 1 || 
+					Integer.parseInt(ID_Str[2]+ID_Str[3]) > 12) {
+//				 		if month digits are 00 or over 13, not a month
+				System.out.println("Wrong ID format: month is not in bewteen Jan and Dec.");	
+			} else if (Integer.parseInt(ID_Str[4]+ID_Str[5]) < 1 || 
+					Integer.parseInt(ID_Str[4]+ID_Str[5]) > 31) {
+//				 		if day digits are 00 or over 31, not a day
 				System.out.println("Wrong ID format: day is not in a month");
 			} else {
 				try { 
@@ -40,6 +41,7 @@ public class Menu {
 				} catch (InputMismatchException e) {
 					System.out.println("Please input Arabic numerals(0-9) only.");
 				} catch (Exception e) {
+					System.out.println("An Error occured. Please try again.");
 					e.printStackTrace();
 				} 
 				break;
@@ -52,7 +54,7 @@ public class Menu {
 		while (true) {
 			System.out.println("How many tickets do you want to buy? (Max: 10)");
 			qty = sc.nextInt();
-			if ((qty >= QtyMinMax.MIN.getQty()) && (qty <= QtyMinMax.MAX.getQty())) {
+			if ((qty >= QtyMinMax.MIN.qty) && (qty <= QtyMinMax.MAX.qty)) {
 				break;
 			} else {
 				System.out.println("Quantity is too more than 10 or less than 1");
@@ -71,7 +73,7 @@ public class Menu {
 		int dcStatus = sc.nextInt();
 		Discount dcType = Discount.valueOfLabel(dcStatus);
 		// if pregnancy chosen, but not female, 
-		if (dcStatus == Discount.PREGNANCY.getMenu() && !ASL.valueOfLabel(dcStatus).isFemale()) {
+		if (dcStatus == Discount.PREGNANCY.menu && !ASL.valueOfLabel(SaveData.ID_NUM[6]).female) {
 			dcType = Discount.NONE;
 			System.out.println("Currently, only female can get pregnancy discount");
 		}
