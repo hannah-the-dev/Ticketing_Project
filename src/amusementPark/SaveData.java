@@ -68,17 +68,6 @@ public class SaveData {
 		this.date = date;
 	}
 	
-	public ArrayList<Object> getAny() {
-		ArrayList<Object> savingEach = new ArrayList<Object>();
-		savingEach.add(getDate());
-		savingEach.add(getTicketType());
-		savingEach.add(getAge());
-		savingEach.add(getQuantity());
-		savingEach.add(getAmount());
-		savingEach.add(getDiscount());
-		return savingEach;
-	}
-
 	public String[] getAnyList() {
 		String[] anyList = new String[] {
 			getDate(),

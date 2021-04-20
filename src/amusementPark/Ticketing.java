@@ -18,7 +18,7 @@ public class Ticketing {
 			savingList = new ArrayList<>();
 			PrintsTickets print = new PrintsTickets(savingList);
 			while (keep == true) {
-				SaveData save = new SaveData();						// [while 문 안으로 넣어서] 
+				SaveData save = new SaveData();						 
 				
 				save.setTicketType(menu.ticketTime());		//DAYTIME OR NIGHTTIME
 				
@@ -31,7 +31,11 @@ public class Ticketing {
 				save.setQuantity(menu.ticketQty());
 				save.setDiscount(menu.inputDiscount());
 				
-				long totalAmount = amount.amount(save.getAge(), save.getTicketType(), save.getQuantity(), save.getDiscount());
+				long totalAmount = amount.amount(
+						save.getAge(), 
+						save.getTicketType(), 
+						save.getQuantity(), 
+						save.getDiscount());
 				save.setAmount(totalAmount);
 				print.printsAmount(totalAmount);
 	
