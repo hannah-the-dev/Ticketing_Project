@@ -29,7 +29,7 @@ public class IO_DBTicketSales {
 			for (SaveData x: savingList) {
 			
 				stmt.execute(SaveData.adding + String.format("('%s', '%s', '%s', '%s', '%s', '%s');",
-								x.getDate(), 			//now() = if want to use writing time. this program uses saved date and time.
+								x.getDate(), 	//now() = if want to use writing time. this program uses saved date and time.
 								x.getTicketType().name(), 
 								x.getAge().name(), 
 								x.getQuantity(), 
