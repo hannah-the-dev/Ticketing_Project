@@ -10,7 +10,6 @@ public class Menu {
 		System.out.println("1. Daytime ticket");
 		System.out.println("2. Nighttime ticket");
 		int ticketType = sc.nextInt();
-		System.out.println(ticketType);
 		TicketType type = TicketType.valueOfLabel(ticketType);
 		return type;
 	}
@@ -70,10 +69,18 @@ public class Menu {
 		System.out.println("3. National merits");
 		System.out.println("4. Multiple children");
 		System.out.println("5. Pregnancy");
-		int dcStatus = sc.nextInt();
-		Discount dcType = Discount.valueOfLabel(dcStatus);
+		int dcStatus = 0;
+		Discount dcType = Discount.NONE;
+		while (true) {
+			dcStatus = sc.nextInt();
+			if ((dcStatus > Discount.PREGNANCY.menu) || (dcStatus < Discount.NONE.menu)) {
+				System.out.println("Wrong number. Please try again.");
+			} else break;
+		}
+		dcType = Discount.valueOfLabel(dcStatus);
 		// if pregnancy chosen, but not female, 
-		if (dcStatus == Discount.PREGNANCY.menu && !ASL.valueOfLabel(SaveData.ID_NUM[6]).female) {
+		if (dcStatus == Discount.PREGNANCY.menu && 
+				!ASL.valueOfLabel(SaveData.ID_NUM[6]).female) {
 			dcType = Discount.NONE;
 			System.out.println("Currently, only female can get pregnancy discount");
 		}

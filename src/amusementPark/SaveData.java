@@ -2,12 +2,11 @@ package amusementPark;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class SaveData {
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	public SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// save type: numbers, return string 
 	private String date; 
 	private TicketType ticket_Type;
@@ -17,6 +16,12 @@ public class SaveData {
 	private Date birthDay;
 	private Discount discount;
 	private static Date today = Calendar.getInstance().getTime();
+	static String adding = "INSERT INTO `ticketing` "
+			+ "(`date`, `ticket_type`, `age`, `quantity`, `amount`, `disocunt`) VALUES "; 
+	static String className = "com.mysql.cj.jdbc.Driver";
+	static String[] connectDB = {"jdbc:mysql://127.0.0.1:3306/testdb", 
+									"root",
+									"99164123"};
 	
 	public static int[] ID_NUM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};		// calculates ages 
 	

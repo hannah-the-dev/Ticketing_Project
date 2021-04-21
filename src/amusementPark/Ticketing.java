@@ -47,8 +47,11 @@ public class Ticketing {
 			
 			// saving list with getter
 			print.printsEnding();	//ending gets total amount
-			WritesTickets write = new WritesTickets(savingList);
-			write.writingSales();			
+//			if .csv files wanted, enable 2 lines below
+//			WritesTickets write = new WritesTickets(savingList);
+//			write.writingSales();			
+			IO_DBTicketSales io = new IO_DBTicketSales(savingList);
+			io.outToDBSales();
 			keep = true;
 			newSession = menu.askSession();
 		}
