@@ -50,10 +50,12 @@ public class Ticketing {
 //			if .csv files wanted, enable 2 lines below
 //			WritesTickets write = new WritesTickets(savingList);
 //			write.writingSales();			
-			IO_DBTicketSales io = new IO_DBTicketSales(savingList);
+			To_DBTicketSales io = new To_DBTicketSales(savingList);
 			io.outToDBSales();
 			keep = true;
 			newSession = menu.askSession();
 		}
+//		From_DBTicketSales io = new From_DBTicketSales();
+//		io.getFromDBSales();
 	}
 }

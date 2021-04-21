@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class IO_DBTicketSales {
+public class To_DBTicketSales {
 	ArrayList<SaveData> savingList;
 	Connection conn;
 	Statement stmt;
 	
-	public IO_DBTicketSales(ArrayList<SaveData> savingList) {
+	public To_DBTicketSales(ArrayList<SaveData> savingList) {
 		this.savingList = savingList;
 	}
 	
@@ -43,4 +43,4 @@ public class IO_DBTicketSales {
 			e.printStackTrace();
 		}
 	}
-}
+}	
