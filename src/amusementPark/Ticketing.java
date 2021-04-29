@@ -11,8 +11,8 @@ public class Ticketing {
 		boolean keep = true;
 		boolean newSession = true;
 		Menu menu = new Menu();
-		CalAge ages = new CalAge();
-		CalAmount amount = new CalAmount();
+		Calculation calcul = new Calculation();
+//		CalAmount amount = new CalAmount();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		while (newSession == true) {
 			savingList = new ArrayList<>();
@@ -24,14 +24,14 @@ public class Ticketing {
 				
 				do {											// if the date is after today,
 					menu.inputID();								// returns 8 digits of birthday
-					save.setBirthDay(ages.bDay());				
-				} while(ages.todayChecker(save.getBirthDay()) == false) ;
-				save.setAge(ages.ageChecks(save.getBirthDay(), SaveData.getToday()));
+					save.setBirthDay(calcul.bDay());				
+				} while(calcul.todayChecker(save.getBirthDay()) == false) ;
+				save.setAge(calcul.ageChecks(save.getBirthDay(), SaveData.getToday()));
 				
 				save.setQuantity(menu.ticketQty());
 				save.setDiscount(menu.inputDiscount());
 				
-				long totalAmount = amount.amount(
+				long totalAmount = calcul.amount(
 						save.getAge(), 
 						save.getTicketType(), 
 						save.getQuantity(), 
@@ -45,9 +45,8 @@ public class Ticketing {
 				keep = menu.keeping();		//call Menu.menu(), if menu returns false, break
 			}
 			
-			// saving list with getter
 			print.printsEnding();	//ending gets total amount
-//			if .csv files wanted, enable 2 lines below
+//	if .csv files wanted, enable 2 lines below
 //			WritesTickets write = new WritesTickets(savingList);
 //			write.writingSales();			
 			To_DBTicketSales io = new To_DBTicketSales(savingList);
@@ -55,7 +54,5 @@ public class Ticketing {
 			keep = true;
 			newSession = menu.askSession();
 		}
-//		From_DBTicketSales io = new From_DBTicketSales();
-//		io.getFromDBSales();
 	}
 }

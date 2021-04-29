@@ -28,7 +28,7 @@ public class From_DBTicketSales {
 			rAll = stmt.executeQuery("SELECT * FROM `ticketing`");
 			System.out.println("=============================== report ===============================");
 			while (rAll.next()) {
-				System.out.printf("%3d: %16.16s %-10s %-10s %2s %8s %12s\n", 
+				System.out.printf("%3d: %16.16s %-10s %-10s %2s %8s  %-12s\n", 
 						rAll.getRow(), 
 						rAll.getString("date"),
 						rAll.getString("ticket_type"),
