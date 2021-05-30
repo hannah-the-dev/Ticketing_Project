@@ -19,9 +19,9 @@ public class SaveData {
 	static String adding = "INSERT INTO `ticketing` "
 			+ "(`date`, `ticket_type`, `age`, `quantity`, `amount`, `discount`) VALUES "; 
 	static String className = "com.mysql.cj.jdbc.Driver";
-	static String[] connectDB = {"jdbc:mysql://127.0.0.1:3306/testdb", 
+	static String[] connectDB = {"jdbc:mysql://192.168.23.17:3306/kopoctc", 
 									"root",
-									"99164123"};
+									"kopoctc"};
 	
 	public static int[] ID_NUM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};		// calculates ages 
 	

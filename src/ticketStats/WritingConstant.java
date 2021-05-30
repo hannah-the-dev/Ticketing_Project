@@ -16,9 +16,9 @@ public class WritingConstant {
 	static String adding = "INSERT INTO `ticketing` "
 			+ "(`date`, `ticket_type`, `age`, `quantity`, `amount`, `disocunt`) VALUES "; 
 	static String className = "com.mysql.cj.jdbc.Driver";
-	static String[] connectDB = {"jdbc:mysql://127.0.0.1:3306/testdb", 
-									"root", 
-									"99164123"};
+	static String[] connectDB = {"jdbc:mysql://192.168.23.17:3306/kopoctc", 
+								"root",
+								"kopoctc"};
 	Connection conn;
 	Statement stmt;
 	
